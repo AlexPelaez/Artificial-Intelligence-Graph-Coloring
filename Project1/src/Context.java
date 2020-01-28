@@ -9,11 +9,11 @@ public class Context {
     }
 
     public Graph strategyOperation(Graph g, int colorNum){
-        return null;
+        return strategy.solve(g, colorNum);
     }
 
     public void setStrategy(ConstraintSolverStrategy s){
-
+        strategy = s;
     }
 
 }

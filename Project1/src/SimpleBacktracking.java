@@ -7,6 +7,7 @@ public class SimpleBacktracking implements ConstraintSolverStrategy {
 
     @Override
     public Graph solve(Graph g, int colorNum) {
+        System.out.println("backtrack");
         return null;
     }
 }
