@@ -13,9 +13,7 @@ public class Main {
             graphs[(i / 10 - 1)] = new Graph(i);
 
         }
-        for(int i=0; i < graphs.length;i++){
-            graphs[i].populateNodelist();
-        }
+
 
         graphs[0].printNodeList();
 

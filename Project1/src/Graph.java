@@ -10,6 +10,7 @@ public class Graph {
 
     public Graph(int n){
         this.n = n;
+        populateNodelist();
     }
 
     public int getN() {
