@@ -4,15 +4,15 @@
 public class Context {
     private ConstraintSolverStrategy strategy;
 
-    public Context(ConstraintSolverStrategy s){
+    public Context(ConstraintSolverStrategy s) {
         strategy = s;
     }
 
-    public Graph strategyOperation(Graph g, int colorNum){
+    public Graph strategyOperation(Graph g, int colorNum) {
         return strategy.solve(g, colorNum);
     }
 
-    public void setStrategy(ConstraintSolverStrategy s){
+    public void setStrategy(ConstraintSolverStrategy s) {
         strategy = s;
     }
 

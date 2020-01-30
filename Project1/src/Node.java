@@ -10,7 +10,6 @@ public class Node {
         this.x = x;
         this.y = y;
         this.c = c;
-
     }
 
     public float getX() {
