@@ -1,6 +1,5 @@
-
-
 import java.awt.Color;
+
 public class Node {
     private float x;
     private float y;
