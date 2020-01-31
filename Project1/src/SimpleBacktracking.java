@@ -1,18 +1,24 @@
+import java.awt.Color;
+
 /**
  * Created by Alex on 1/28/20.
  */
 public class SimpleBacktracking implements ConstraintSolverStrategy {
     int color[];
-    Color colorArray[]
+
+    Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
 
     @Override
     public Graph solve(Graph g, int colorNum) {
         color = new int[g.getGraphSize()];
+        Node nodes[] = g.getNodelist();
         for (int i = 0; i < color.length; i++) {
             color[i] = 0;
         }
         if (simpleBacktracking(g, color, colorNum, 0)) {
             for(int i = 0; i < color.length; i++) {
+                nodes[i].setC(colorArray[color[i]]);
+
                 System.out.println(color[i]);
             }
         } else {
@@ -21,6 +27,7 @@ public class SimpleBacktracking implements ConstraintSolverStrategy {
 
         return null;
     }
+
 
     private boolean simpleBacktracking(Graph g, int color[], int colorNum, int vertex) {
         if (vertex == g.getGraphSize()-1) {
