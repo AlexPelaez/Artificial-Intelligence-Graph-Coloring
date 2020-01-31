@@ -52,11 +52,11 @@ public class Graph {
         int closestNode;
 
         neighbors = new int[n][n];
-        for(int i= 0; i < nodelist.length; i++) {
+        for(int i= 0; i < 10*nodelist.length; i++) {
             randNode = (int)(Math.random()*n);
             closestNode = closestNeighbor(randNode);
             if (closestNode != -1) {
-                printAdjacencyMatrix();
+//                printAdjacencyMatrix();
                 neighbors[randNode][closestNode] = 1;
                 neighbors[closestNode][randNode] = 1;
 
@@ -78,16 +78,17 @@ public class Graph {
         int closestIndex = -1;
 
         for(int i= 0; i < nodelist.length; i++) {
-            if (i != node) {
-                currentDistance = calculateDistance(nodelist[node], nodelist[i]);
-                if (closestDistance > currentDistance && neighbors[node][i] == 0) {
-                    if (checkIntersections(nodelist[node], nodelist[i])) {
+            if (i != node && neighbors[node][i] == 0) {
+                if (checkIntersections(nodelist[node], nodelist[i])) {
+                    currentDistance = calculateDistance(nodelist[node], nodelist[i]);
+                    if (closestDistance > currentDistance) {
                         closestDistance = currentDistance;
                         closestIndex = i;
                     }
                 }
             }
         }
+        System.out.println(closestIndex);
         return closestIndex;
     }
     /**
@@ -122,7 +123,7 @@ public class Graph {
                         if (slope1*count+const1 == slope2*count+const2) {
                             return false;
                         }
-                        count = formatFloat(ratio*(count+increment));
+                        count = formatFloat(ratio*(count)+ratio*(increment));
                         count = formatFloat(count/ratio);
                     } while (count != Math.max(nodelist[i].getX(), nodelist[j].getX()));
                 }
