@@ -3,7 +3,21 @@ public class Main {
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
         Graph graphs[] = new Graph[10];
-        Context c = new Context(new MinConflict());
+        graphs[0] = new Graph(10);
+        graphs[0].printNodeList();
+        graphs[0].printAdjacencyMatrix();
+
+        Context c = new Context(new SimpleBacktracking());
+        c.strategyOperation(graphs[0], 4);
+
+
+
+
+
+
+
+
+
 //        for(int i = 10; i <= 100; i+=10) {
 //            graphs[(i / 10 - 1)] = new Graph(i);
 //        }
@@ -33,9 +47,7 @@ public class Main {
  9  1  0  1  0  1  1  0  0  0  -
  */
 
-        graphs[0] = new Graph(10);
-        graphs[0].printNodeList();
-        graphs[0].printAdjacencyMatrix();
+
     }
 }
 

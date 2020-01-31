@@ -116,7 +116,7 @@ public class Graph {
      */
     private boolean checkIntersections(Node n1, Node n2) {
         final int ratio = 1000;
-        final float increment = .0001f;
+        final float increment = 1;
         float slope1 = 0;
         float slope2 = 0;
         float const1 = 0;
@@ -132,7 +132,7 @@ public class Graph {
                     slope2 = calculateSlope(nodelist[i], nodelist[j]);
                     const2 = -slope2*(nodelist[i].getX())+nodelist[i].getY();
                     do {
-                        if (slope1*count+const1 == slope2*count+const2) {
+                        if (formatFloat(slope1*count+const1) == formatFloat(slope2*count+const2)) {
                             return false;
                         }
                         count = formatFloat(ratio*(count)+ratio*(increment));
