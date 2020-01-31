@@ -1,8 +1,5 @@
 import java.awt.Color;
 
-/**
- * Created by Alex on 1/28/20.
- */
 public class SimpleBacktracking implements ConstraintSolverStrategy {
     int color[];
 
