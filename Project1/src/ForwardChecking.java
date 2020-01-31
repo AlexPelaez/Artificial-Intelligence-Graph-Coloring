@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class FowardChecking implements ConstraintSolverStrategy {
+public class ForwardChecking implements ConstraintSolverStrategy {
     private final static Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
     private int color[];
 

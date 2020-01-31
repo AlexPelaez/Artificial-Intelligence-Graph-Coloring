@@ -15,8 +15,6 @@ public class SimpleBacktracking implements ConstraintSolverStrategy {
         if (simpleBacktracking(g, color, colorNum, 0)) {
             for(int i = 0; i < color.length; i++) {
                 nodes[i].setC(colorArray[color[i]]);
-
-                System.out.println(color[i]);
             }
         } else {
             System.out.println("No solution");
