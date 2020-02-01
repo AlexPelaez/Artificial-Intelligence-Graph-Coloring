@@ -7,7 +7,14 @@ public class Main {
         graphs[0].printNodeList();
         graphs[0].printAdjacencyMatrix();
 
-        Context c = new Context(new ConstraintPropagation());
+
+        Context c = new Context(new ForwardChecking());
+        c.strategyOperation(graphs[0], 4);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        c.setStrategy(new SimpleBacktracking());
+
         c.strategyOperation(graphs[0], 4);
 
 
