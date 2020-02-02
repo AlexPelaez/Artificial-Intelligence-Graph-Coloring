@@ -1,23 +1,27 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Queue;
 
-/**
- * Implementation to solve the graph coloring problem using backtracking with forward checking
- */
-public class ForwardChecking extends BacktrackingBase implements ConstraintSolverStrategy {
+public class ArcConsistency implements ConstraintSolverStrategy {
     private final static Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
     private int color[];
-    private ArrayList<Integer>[] domain;
     public int count = 0;
-    /**
-     * Set up backtracking with forward checking.
-     *
-     * @param g {@code Graph} representation of the graph
-     * @param colorNum {@code int} number of colors being used for this search
-     */
+    private Queue<Edge> q;
+    private ArrayList<Integer>[] domain;
+
     @Override
     public Graph solve(Graph g, int colorNum) {
         color = new int[g.getGraphSize()];
+
+        for(int i = 0; i < g.getNeighbors().length; i++) {
+            for(int j = 0; j < g.getNeighbors().length; j++) {
+                if (g.getNeighbors()[i][j] == 1) {
+                    if (i>j){
+                        q.add(new Edge(i, j));
+                    }
+                }
+            }
+        }
         domain = (ArrayList<Integer>[]) new ArrayList[g.getGraphSize()];
         for (int i = 0; i < color.length; i++) {
             color[i] = -1;
@@ -29,37 +33,29 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
             }
             domain[d] = tempColors;
         }
-        if (forwardChecking(g, color, colorNum, 0)) {
+        if (checkArc(g, color, colorNum, 0)) {
             for(int i = 0; i < color.length; i++) {
                 g.getNodelist()[i].setC(colorArray[color[i]]);
             }
         } else {
             System.out.println("No solution");
         }
-        System.out.println("Forward checking count:");
+        System.out.println("Edge Consistency count:");
         System.out.println(count);
 
         return null;
     }
-    /**
-     * Recursive backtracking function.
-     *
-     * @param g {@code Graph} representation of the graph
-     * @param color {@code Graph} representation of the graph
-     * @param colorNum {@code int} number of colors being used for this search
-     * @param vertex {@code int} the current vertex
-     *
-     * @return a {@code boolean} that represents if the solution was found.
-     */
-    private boolean forwardChecking(Graph g, int color[], int colorNum, int vertex) {
+
+    private boolean checkArc(Graph g, int color[], int colorNum, int v) {
         count++;
+        int vertex = v; //remember to remove this - just for debug
 
         for (int i = 0; i < domain[vertex].size(); i++) {
             if(checkColor(g.getNeighbors(), color, domain[vertex].get(i), vertex)) {
                 color[vertex] = domain[vertex].get(i);
                 if(vertex != g.getGraphSize()-1) {
                     domain[vertex+1] = generateDomain(g, vertex+1, color);
-                    if (forwardChecking(g, color, colorNum, vertex+1)) {
+                    if (checkArc(g, color, colorNum, vertex+1)) {
                         return true;
                     }
                     else {
@@ -74,16 +70,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
         }
         return false;
     }
-    /**
-     * Forward constraint checking.
-     *
-     * @param g {@code Graph} representation of the graph
-     * @param vertex {@code int} the current vertex
-     * @param color {@code int[]} representation of the graph
-     *
-     * @return a {@code ArrayList<Integer>} that represents the domain
-     * of a given node.
-     */
+
     private ArrayList<Integer> generateDomain(Graph g, int vertex, int[] color) {
         ArrayList<Integer> currentDomain = new ArrayList<Integer>();
         for (int i = 0; i < colorArray.length; i++) {
@@ -92,5 +79,16 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
             }
         }
         return currentDomain;
+    }
+
+    private boolean checkColor(int adjacencyMatrix[][], int color[], int colorNum, int index) {
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            if (adjacencyMatrix[index][i] == 1) {
+                if (colorNum == color[i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
