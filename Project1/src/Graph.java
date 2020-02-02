@@ -1,4 +1,6 @@
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
 /**
  * The {@code Graph} is used to generate and store randomized
  * planar graphs of any size. First an array of {@code Node} are
@@ -181,6 +183,15 @@ public class Graph {
         BigDecimal bd = new BigDecimal(f);
         bd = bd.setScale(4, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
+    }
+    public ArrayList<Integer> getNeighborsForVertex(int vertex) {
+        ArrayList<Integer> neighborIndexs = new ArrayList<Integer>();
+        for(int i = 0; i < neighbors.length; i++){
+            if(neighbors[vertex][i] == 1) {
+                neighborIndexs.add(i);
+            }
+        }
+        return neighborIndexs;
     }
     /**
      * Prints the nodelist[] to the terminal.

@@ -31,14 +31,14 @@ public class ConstraintPropagation implements ConstraintSolverStrategy {
         return true;
     }
 
-    private boolean revise(int adjacencyMatrix[][], int color[], Arc x){
-        boolean revised = false;
-        for(int i = 0; i < color.length; i++){
-            if()
-
-        }
-    return true;
-    }
+//    private boolean revise(int adjacencyMatrix[][], int color[], Arc x){
+//        boolean revised = false;
+//        for(int i = 0; i < color.length; i++){
+//            if()
+//
+//        }
+//    return true;
+//    }
 
     private boolean checkColor(int adjacencyMatrix[][], int color[], int colorNum, int index) {
         for (int i = 0; i < adjacencyMatrix.length; i++) {

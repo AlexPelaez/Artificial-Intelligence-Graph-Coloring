@@ -3,6 +3,7 @@ import java.awt.Color;
 public class SimpleBacktracking implements ConstraintSolverStrategy {
     private final static Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
     private int color[];
+    public int count = 0;
 
     @Override
     public Graph solve(Graph g, int colorNum) {
@@ -11,13 +12,14 @@ public class SimpleBacktracking implements ConstraintSolverStrategy {
             color[i] = 0;
         }
         if (simpleBacktracking(g, color, colorNum, 0)) {
-            for(int i = 0; i < color.length; i++) {
-                g.getNodelist()[i].setC(colorArray[color[i]]);
-            }
+//            for(int i = 0; i < color.length; i++) {
+//                g.getNodelist()[i].setC(colorArray[color[i]]);
+//            }
         } else {
             System.out.println("No solution");
         }
-
+        System.out.println("Simple Backtracking count:");
+        System.out.println(count);
         return null;
     }
 
@@ -25,6 +27,7 @@ public class SimpleBacktracking implements ConstraintSolverStrategy {
         if (vertex == g.getGraphSize()-1) {
             return true;
         }
+        count++;
 
         for (int i = 0; i < colorNum; i++) {
             if(checkColor(g.getNeighbors(), color, i, vertex)) {
