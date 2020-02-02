@@ -37,8 +37,7 @@ public class ForwardChecking implements ConstraintSolverStrategy {
     private boolean forwardChecking(Graph g, int color[], int colorNum, int v) {
         count++;
         int vertex = v;
-
-
+        
         for (int i = 0; i < domain[vertex].size(); i++) {
             if(checkColor(g.getNeighbors(), color, domain[vertex].get(i), vertex)) {
                 color[vertex] = domain[vertex].get(i);
@@ -51,14 +50,10 @@ public class ForwardChecking implements ConstraintSolverStrategy {
                         color[vertex] = -1;
                     }
                 }
-
-
-
             }
         }
 
         if (vertex == g.getGraphSize()-1) {
-
             return true;
         }
         return false;
