@@ -3,7 +3,7 @@ public class Main {
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
         final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
-        Context c = new Context(new SimpleBacktracking());
+        Context c = new Context();
         Graph graphs[] = new Graph[10];
 
         graphs[0] = new Graph(10);
@@ -14,7 +14,7 @@ public class Main {
             System.out.println();
             System.out.println();
             c.setStrategy(solvers[i]);
-            c.strategyOperation(graphs[0], 4);
+            c.strategyOperation(graphs[0], 3);
             System.out.println();
             System.out.println();
 

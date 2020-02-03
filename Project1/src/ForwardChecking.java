@@ -36,6 +36,9 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
         } else {
             System.out.println("No solution");
         }
+        for(int i = 0; i < color.length; i++) {
+            System.out.println("Node "+i+": "+color[i]);
+        }
         System.out.println("Forward checking count:");
         System.out.println(count);
 

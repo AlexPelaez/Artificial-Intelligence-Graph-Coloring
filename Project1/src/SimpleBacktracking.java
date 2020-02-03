@@ -25,6 +25,9 @@ public class SimpleBacktracking extends BacktrackingBase implements ConstraintSo
         } else {
             System.out.println("No solution");
         }
+        for(int i = 0; i < color.length; i++) {
+            System.out.println("Node "+i+": "+color[i]);
+        }
         System.out.println("Simple Backtracking count:");
         System.out.println(count);
         return null;

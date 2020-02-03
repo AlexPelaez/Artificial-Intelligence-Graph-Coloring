@@ -4,6 +4,8 @@
 public class Context {
     private ConstraintSolverStrategy strategy;
 
+    public Context() {}
+
     public Context(ConstraintSolverStrategy s) {
         strategy = s;
     }
