@@ -67,7 +67,6 @@ public class Graph {
 
         neighbors = new int[n][n];
         while(!checkAllNodes()){
-            System.out.println("here1");
             randNode = (int)(Math.random()*n);
             closestNode = closestNeighbor(randNode);
             if (closestNode != -1) {
@@ -109,41 +108,15 @@ public class Graph {
     /**
      * Checks if the a new edge between two {@code Node} intersects
      * with any of the pre-existing edges. When a collision is found
-     * the method returns.
+     * the method returns true.
      *
      * @param n1 {@code Node} point one.
      * @param n2 {@code Node} point two.
      *                        
      * @return a {@code boolean} that is true if the new edge we are trying 
-     * to construct between n1 and n2 does not intersect with any pre-existing lines.
+     * to construct between n1 and n2 intersects with any pre-existing lines.
      */
     private boolean checkIntersections(Node n1, Node n2) {
-//        final int ratio = 1000;
-//        final float increment = 1;
-//        float slope1 = 0;
-//        float slope2 = 0;
-//        float const1 = 0;
-//        float const2 = 0;
-//        float count;
-//
-//        slope1 = calculateSlope(n1, n2);
-//        const1 = -slope1*(n1.getX())+n1.getY();
-//        for (int i = 0; i < neighbors.length; i++) {
-//            for (int j = 0; j < neighbors.length; j++){
-//                if (neighbors[i][j] == 1) {
-//                    count = Math.min(nodelist[i].getX(), nodelist[j].getX());
-//                    slope2 = calculateSlope(nodelist[i], nodelist[j]);
-//                    const2 = -slope2*(nodelist[i].getX())+nodelist[i].getY();
-//                    do {
-//                        if (formatFloat(slope1*count+const1) == formatFloat(slope2*count+const2)) {
-//                            return false;
-//                        }
-//                        count = formatFloat(ratio*(count)+ratio*(increment));
-//                        count = formatFloat(count/ratio);
-//                    } while (count != Math.max(nodelist[i].getX(), nodelist[j].getX()));
-//                }
-//            }
-//        }
         float m1;
         float m2;
         float b1;
@@ -154,10 +127,10 @@ public class Graph {
         m1 = calculateSlope(n1,n2);
         b1 = (-m1)*(n1.getX())+n1.getY();
 
-        float lowX1 = Math.min(n1.getX(), n2.getX());
-        float highX1 = Math.max(n1.getX(), n2.getX());
-        float lowY1 = Math.min(n1.getY(), n2.getY());
-        float highY1 = Math.max(n1.getY(), n2.getY());
+        final float lowX1 = Math.min(n1.getX(), n2.getX());
+        final float highX1 = Math.max(n1.getX(), n2.getX());
+        final float lowY1 = Math.min(n1.getY(), n2.getY());
+        final float highY1 = Math.max(n1.getY(), n2.getY());
 
         for (int i = 0; i < neighbors.length; i++) {
             for (int j = 0; j < neighbors.length; j++) {
@@ -165,7 +138,6 @@ public class Graph {
                     m2 = calculateSlope(nodelist[i], nodelist[j]);
                     b2 = (-m2) * (nodelist[i].getX()) + nodelist[i].getY();
                     if (m1 == m2) {
-                        System.out.println("XXXXXXXXXXXXXXXXXXXXX");
                         return false;
                     }
                     intersectionX = (b2 - b1) / (m1 - m2);
@@ -178,13 +150,9 @@ public class Graph {
 
 
                     if(intersectionX > lowX1 && intersectionX < highX1){
-                        System.out.println("****************");
                         if(intersectionY > lowY1 && intersectionY < highY1) {
-                            System.out.println("%%%%%%%%%%%%%%%%%%");
                             if (intersectionX > lowX2 && intersectionX < highX2) {
-                                System.out.println("####################");
-                                if (intersectionY > lowY2 && intersectionY > highY2) {
-                                    System.out.println("$$$$$$$$$$$$$$$$$");
+                                if (intersectionY > lowY2 && intersectionY < highY2) {
                                     return true;
                                 }
                             }
@@ -196,6 +164,16 @@ public class Graph {
         }
         return false;
     }
+    /**
+     * Checks if all nodes that can have a closest neighbor without any
+     * intersections do. If they do the method returns true and the while loop
+     * in populateAdjacencyMatrix() terminates.
+
+     *
+     * @return a {@code boolean} that is true if all nodes in a graph are attached to a neighbor
+     * that they can be attached to.
+     */
+
     private boolean checkAllNodes(){
         for(int i =0; i < neighbors.length; i++){
             for (int j = 0; j < neighbors.length; j++){
@@ -208,8 +186,6 @@ public class Graph {
 
 
                         }
-
-                        System.out.println("*********************");
 
                     }
             }
