@@ -86,7 +86,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
      */
     private ArrayList<Integer> generateDomain(Graph g, int vertex, int[] color) {
         ArrayList<Integer> currentDomain = new ArrayList<Integer>();
-        for (int i = 0; i < colorArray.length; i++) {
+        for (int i = 0; i < domain[vertex].size(); i++) {
             if (checkColor(g.getNeighbors(), color, i, vertex)) {
                 currentDomain.add(i);
             }
