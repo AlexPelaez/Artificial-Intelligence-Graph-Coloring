@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * {@code BacktrackingBase} is an abstract class that
  * will be extended by {@code SimpleBacktracking},
@@ -5,6 +7,7 @@
  *
  */
 public abstract class BacktrackingBase {
+    public final static Color colorArray[] = new Color[]{Color.blue, Color.green, Color.red, Color.yellow};
     /**
      * Determines if a given vertex and color will have any
      * conflicting constraints.

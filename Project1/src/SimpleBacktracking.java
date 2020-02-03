@@ -3,7 +3,7 @@ import java.awt.Color;
  * Implementation to solve the graph coloring problem using simple backtracking
  */
 public class SimpleBacktracking extends BacktrackingBase implements ConstraintSolverStrategy {
-    private final static Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
+
     private int color[];
     public int count = 0;
     /**

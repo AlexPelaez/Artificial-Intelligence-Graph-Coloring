@@ -6,7 +6,7 @@ public class Main {
         Context c = new Context();
         Graph graphs[] = new Graph[10];
 
-        graphs[0] = new Graph(10);
+        graphs[0] = new Graph(5);
         graphs[0].printNodeList();
         graphs[0].printAdjacencyMatrix();
 
