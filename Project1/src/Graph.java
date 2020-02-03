@@ -25,20 +25,20 @@ public class Graph {
      */
     public Graph(int n) {
         this.n = n;
-//        populateNodelist();
-//        populateAdjacencyMatrix();
-        neighbors = new int[10][10];
-        nodelist = new Node[] {(new Node(0.2407f, 0.9712f, null)), (new Node(0.5686f, 0.5975f, null)), (new Node(0.7973f, 0.8415f, null)), (new Node(0.2935f, 0.1026f, null)), (new Node(0.6951f, 0.8155f, null)), (new Node(0.7172f, 0.6195f, null)), (new Node(0.7849f, 0.0543f, null)), (new Node(0.4253f, 0.3342f, null)), (new Node(0.1019f, 0.6077f, null)), (new Node(0.6277f, 0.8892f, null))};
-        neighbors[0] = new int[] {0,  1,  0,  0,  0,  1,  0,  0,  1,  1 };
-        neighbors[1] = new int[] {1,  0,  0,  0,  0,  1,  1,  1,  1,  0 };
-        neighbors[2] = new int[] {0,  0,  0,  0,  1,  1,  1,  0,  0,  1 };
-        neighbors[3] = new int[] {0,  0,  0,  0,  0,  0,  1,  1,  1,  0 };
-        neighbors[4] = new int[] {0,  0,  1,  0,  0,  1,  0,  0,  0,  1 };
-        neighbors[5] = new int[] {1,  1,  1,  0,  1,  0,  1,  0,  0,  1 };
-        neighbors[6] = new int[] {0,  1,  1,  1,  0,  1,  0,  1,  0,  0 };
-        neighbors[7] = new int[] {0,  1,  0,  1,  0,  0,  1,  0,  1,  0 };
-        neighbors[8] = new int[] {1,  1,  0,  1,  0,  0,  0,  1,  0,  0 };
-        neighbors[9] = new int[] {1,  0,  1,  0,  1,  1,  0,  0,  0,  0 };
+        populateNodelist();
+        populateAdjacencyMatrix();
+//        neighbors = new int[10][10];
+//        nodelist = new Node[] {(new Node(0.2407f, 0.9712f, null)), (new Node(0.5686f, 0.5975f, null)), (new Node(0.7973f, 0.8415f, null)), (new Node(0.2935f, 0.1026f, null)), (new Node(0.6951f, 0.8155f, null)), (new Node(0.7172f, 0.6195f, null)), (new Node(0.7849f, 0.0543f, null)), (new Node(0.4253f, 0.3342f, null)), (new Node(0.1019f, 0.6077f, null)), (new Node(0.6277f, 0.8892f, null))};
+//        neighbors[0] = new int[] {0,  1,  0,  0,  0,  1,  0,  0,  1,  1 };
+//        neighbors[1] = new int[] {1,  0,  0,  0,  0,  1,  1,  1,  1,  0 };
+//        neighbors[2] = new int[] {0,  0,  0,  0,  1,  1,  1,  0,  0,  1 };
+//        neighbors[3] = new int[] {0,  0,  0,  0,  0,  0,  1,  1,  1,  0 };
+//        neighbors[4] = new int[] {0,  0,  1,  0,  0,  1,  0,  0,  0,  1 };
+//        neighbors[5] = new int[] {1,  1,  1,  0,  1,  0,  1,  0,  0,  1 };
+//        neighbors[6] = new int[] {0,  1,  1,  1,  0,  1,  0,  1,  0,  0 };
+//        neighbors[7] = new int[] {0,  1,  0,  1,  0,  0,  1,  0,  1,  0 };
+//        neighbors[8] = new int[] {1,  1,  0,  1,  0,  0,  0,  1,  0,  0 };
+//        neighbors[9] = new int[] {1,  0,  1,  0,  1,  1,  0,  0,  0,  0 };
     }
     /**
      * Translates a character array representation of a
@@ -66,7 +66,8 @@ public class Graph {
         int closestNode;
 
         neighbors = new int[n][n];
-        for(int i= 0; i < 10*nodelist.length; i++) {
+        while(!checkAllNodes()){
+            System.out.println("here1");
             randNode = (int)(Math.random()*n);
             closestNode = closestNeighbor(randNode);
             if (closestNode != -1) {
@@ -93,7 +94,7 @@ public class Graph {
 
         for(int i= 0; i < nodelist.length; i++) {
             if (i != node && neighbors[node][i] == 0) {
-                if (checkIntersections(nodelist[node], nodelist[i])) {
+                if (!checkIntersections(nodelist[node], nodelist[i])) {
                     currentDistance = calculateDistance(nodelist[node], nodelist[i]);
                     if (closestDistance > currentDistance) {
                         closestDistance = currentDistance;
@@ -102,7 +103,7 @@ public class Graph {
                 }
             }
         }
-        System.out.println(closestIndex);
+        //System.out.println(closestIndex);
         return closestIndex;
     }
     /**
@@ -117,30 +118,100 @@ public class Graph {
      * to construct between n1 and n2 does not intersect with any pre-existing lines.
      */
     private boolean checkIntersections(Node n1, Node n2) {
-        final int ratio = 1000;
-        final float increment = 1;
-        float slope1 = 0;
-        float slope2 = 0;
-        float const1 = 0;
-        float const2 = 0;
-        float count;
+//        final int ratio = 1000;
+//        final float increment = 1;
+//        float slope1 = 0;
+//        float slope2 = 0;
+//        float const1 = 0;
+//        float const2 = 0;
+//        float count;
+//
+//        slope1 = calculateSlope(n1, n2);
+//        const1 = -slope1*(n1.getX())+n1.getY();
+//        for (int i = 0; i < neighbors.length; i++) {
+//            for (int j = 0; j < neighbors.length; j++){
+//                if (neighbors[i][j] == 1) {
+//                    count = Math.min(nodelist[i].getX(), nodelist[j].getX());
+//                    slope2 = calculateSlope(nodelist[i], nodelist[j]);
+//                    const2 = -slope2*(nodelist[i].getX())+nodelist[i].getY();
+//                    do {
+//                        if (formatFloat(slope1*count+const1) == formatFloat(slope2*count+const2)) {
+//                            return false;
+//                        }
+//                        count = formatFloat(ratio*(count)+ratio*(increment));
+//                        count = formatFloat(count/ratio);
+//                    } while (count != Math.max(nodelist[i].getX(), nodelist[j].getX()));
+//                }
+//            }
+//        }
+        float m1;
+        float m2;
+        float b1;
+        float b2;
+        float intersectionX;
+        float intersectionY;
 
-        slope1 = calculateSlope(n1, n2);
-        const1 = -slope1*(n1.getX())+n1.getY();
+        m1 = calculateSlope(n1,n2);
+        b1 = (-m1)*(n1.getX())+n1.getY();
+
+        float lowX1 = Math.min(n1.getX(), n2.getX());
+        float highX1 = Math.max(n1.getX(), n2.getX());
+        float lowY1 = Math.min(n1.getY(), n2.getY());
+        float highY1 = Math.max(n1.getY(), n2.getY());
+
         for (int i = 0; i < neighbors.length; i++) {
-            for (int j = 0; j < neighbors.length; j++){
+            for (int j = 0; j < neighbors.length; j++) {
                 if (neighbors[i][j] == 1) {
-                    count = Math.min(nodelist[i].getX(), nodelist[j].getX());
-                    slope2 = calculateSlope(nodelist[i], nodelist[j]);
-                    const2 = -slope2*(nodelist[i].getX())+nodelist[i].getY();
-                    do {
-                        if (formatFloat(slope1*count+const1) == formatFloat(slope2*count+const2)) {
-                            return false;
+                    m2 = calculateSlope(nodelist[i], nodelist[j]);
+                    b2 = (-m2) * (nodelist[i].getX()) + nodelist[i].getY();
+                    if (m1 == m2) {
+                        System.out.println("XXXXXXXXXXXXXXXXXXXXX");
+                        return false;
+                    }
+                    intersectionX = (b2 - b1) / (m1 - m2);
+                    intersectionY = m1 * intersectionX + b1;
+                    float lowX2 = Math.min(nodelist[i].getX(), nodelist[j].getX());
+                    float highX2 = Math.max(nodelist[i].getX(), nodelist[j].getX());
+                    float lowY2 = Math.min(nodelist[i].getY(), nodelist[j].getY());
+                    float highY2 = Math.max(nodelist[i].getY(), nodelist[j].getY());
+
+
+
+                    if(intersectionX > lowX1 && intersectionX < highX1){
+                        System.out.println("****************");
+                        if(intersectionY > lowY1 && intersectionY < highY1) {
+                            System.out.println("%%%%%%%%%%%%%%%%%%");
+                            if (intersectionX > lowX2 && intersectionX < highX2) {
+                                System.out.println("####################");
+                                if (intersectionY > lowY2 && intersectionY > highY2) {
+                                    System.out.println("$$$$$$$$$$$$$$$$$");
+                                    return true;
+                                }
+                            }
                         }
-                        count = formatFloat(ratio*(count)+ratio*(increment));
-                        count = formatFloat(count/ratio);
-                    } while (count != Math.max(nodelist[i].getX(), nodelist[j].getX()));
+
+                    }
                 }
+            }
+        }
+        return false;
+    }
+    private boolean checkAllNodes(){
+        for(int i =0; i < neighbors.length; i++){
+            for (int j = 0; j < neighbors.length; j++){
+                    if (neighbors[i][j] == 0 && i !=j){
+                        printNodeList();
+                        printAdjacencyMatrix();
+
+                        if(!checkIntersections(nodelist[i], nodelist[j])){
+                            return false;
+
+
+                        }
+
+                        System.out.println("*********************");
+
+                    }
             }
         }
         return true;
