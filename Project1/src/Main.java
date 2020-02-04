@@ -3,8 +3,9 @@ public class Main {
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
         final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
-        Context c = new Context(new ArcConsistency());
+        Context c = new Context(new SimulatedAnnealing());
         Graph graphs[] = new Graph[10];
+        graphs[0] = new Graph(10);
         c.strategyOperation(graphs[0], 4);
         graphs[0].printNodeList();
         graphs[0].printAdjacencyMatrix();
