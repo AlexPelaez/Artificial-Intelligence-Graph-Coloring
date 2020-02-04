@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- * Implementation to solve the graph coloring problem using backtracking with forward checking
+ * Implementation to solve the graph coloring problem using backtracking with forward checking.
  */
 public class ForwardChecking extends BacktrackingBase implements ConstraintSolverStrategy {
     private int color[];
@@ -10,8 +10,8 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
     /**
      * Set up backtracking with forward checking.
      *
-     * @param g {@code Graph} representation of the graph
-     * @param colorNum {@code int} number of colors being used for this search
+     * @param g {@code Graph} representation of the graph.
+     * @param colorNum {@code int} number of colors being used for this search.
      */
     @Override
     public Graph solve(Graph g, int colorNum) {
@@ -29,9 +29,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
             domain[d] = tempColors;
         }
         if (forwardChecking(g, color, colorNum, 0)) {
-//            for(int i = 0; i < color.length; i++) {
-//                g.getNodelist()[i].setC(colorArray[color[i]]);
-//            }
+
         } else {
             System.out.println("No solution");
         }
@@ -46,10 +44,10 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
     /**
      * Recursive backtracking function.
      *
-     * @param g {@code Graph} representation of the graph
-     * @param color {@code Graph} representation of the graph
-     * @param colorNum {@code int} number of colors being used for this search
-     * @param vertex {@code int} the current vertex
+     * @param g {@code Graph} representation of the graph.
+     * @param color {@code Graph} representation of the graph.
+     * @param colorNum {@code int} number of colors being used for this search.
+     * @param vertex {@code int} the current vertex.
      *
      * @return a {@code boolean} that represents if the solution was found.
      */
@@ -78,11 +76,11 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
         return false;
     }
     /**
-     * Forward constraint checking.
+     * Generate the domain for a given vertex and color array.
      *
-     * @param g {@code Graph} representation of the graph
-     * @param vertex {@code int} the current vertex
-     * @param color {@code int[]} representation of the graph
+     * @param g {@code Graph} representation of the graph.
+     * @param vertex {@code int} the current vertex.
+     * @param color {@code int[]} representation of the graph.
      *
      * @return a {@code ArrayList<Integer>} that represents the domain
      * of a given node.
