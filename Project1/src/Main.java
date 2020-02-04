@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
 
         final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
+
         Graph graphs[] = new Graph[10];
         graphs[0] = new Graph(10);
 //        graphs[1] = graphs[0];
@@ -21,7 +22,7 @@ public class Main {
 //        for(int i = 0; i < 4; i++) {
 //            graphs[i] = new Graph((10*(i+1)));
 //        }
-//
+
 //        for (int j = 0; j < 3; j++) {
 //            System.out.println("Graph : " + (j + 1) * 10);
 //            for (int i = 0; i < solvers.length; i++) {
