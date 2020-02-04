@@ -3,21 +3,16 @@ public class Main {
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
 
-        //final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
-        Context c = new Context(new SimulatedAnnealing());
+        final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
+
         Graph graphs[] = new Graph[10];
         graphs[0] = new Graph(10);
+//        graphs[1] = graphs[0];
+        Context c = new Context(new Genetic());
         c.strategyOperation(graphs[0], 4);
-        graphs[0].printNodeList();
-        graphs[0].printAdjacencyMatrix();
-
-//        for(int j=0; j<10; j++) {
-//            graphs[0] = new Graph(10);
-//            for (int i = 0; i < solvers.length; i++) {
-//                c.setStrategy(solvers[i]);
-//                c.strategyOperation(graphs[0], 4);
-//                System.out.println();
-//                System.out.println();
+//        c.strategyOperation(graphs[0], 4);
+//        System.out.println();
+//        c = new Context(new ArcConsistency());
 
 //
 //        c.strategyOperation(graphs[1], 4);
