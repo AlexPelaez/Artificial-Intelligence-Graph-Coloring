@@ -3,22 +3,22 @@ public class Main {
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
         final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
-        Context c = new Context();
+        Context c = new Context(new ArcConsistency());
         Graph graphs[] = new Graph[10];
-
-        graphs[0] = new Graph(5);
+        c.strategyOperation(graphs[0], 4);
         graphs[0].printNodeList();
         graphs[0].printAdjacencyMatrix();
 
-        for (int i = 0; i < solvers.length; i++) {
-            System.out.println();
-            System.out.println();
-            c.setStrategy(solvers[i]);
-            c.strategyOperation(graphs[0], 3);
-            System.out.println();
-            System.out.println();
-
-        }
+//        for(int j=0; j<10; j++) {
+//            graphs[0] = new Graph(10);
+//            for (int i = 0; i < solvers.length; i++) {
+//                c.setStrategy(solvers[i]);
+//                c.strategyOperation(graphs[0], 4);
+//                System.out.println();
+//                System.out.println();
+//
+//            }
+//        }
 
 
 

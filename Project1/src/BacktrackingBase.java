@@ -8,6 +8,7 @@ import java.awt.*;
  */
 public abstract class BacktrackingBase {
     public final static Color colorArray[] = new Color[]{Color.blue, Color.green, Color.red, Color.yellow};
+    public int count = 0;
     /**
      * Determines if a given vertex and color will have any
      * conflicting constraints.

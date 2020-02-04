@@ -3,9 +3,7 @@ import java.awt.Color;
  * Implementation to solve the graph coloring problem using simple backtracking
  */
 public class SimpleBacktracking extends BacktrackingBase implements ConstraintSolverStrategy {
-
     private int color[];
-    public int count = 0;
     /**
      * Set up the simple backtracking algorithm. Set the color of nodes.
      *
@@ -14,6 +12,7 @@ public class SimpleBacktracking extends BacktrackingBase implements ConstraintSo
      */
     @Override
     public Graph solve(Graph g, int colorNum) {
+        count = 1;
         color = new int[g.getGraphSize()];
         for (int i = 0; i < color.length; i++) {
             color[i] = 0;
@@ -25,9 +24,9 @@ public class SimpleBacktracking extends BacktrackingBase implements ConstraintSo
         } else {
             System.out.println("No solution");
         }
-        for(int i = 0; i < color.length; i++) {
-            System.out.println("Node "+i+": "+color[i]);
-        }
+//        for(int i = 0; i < color.length; i++) {
+//            System.out.println("Node "+i+": "+color[i]);
+//        }
         System.out.println("Simple Backtracking count:");
         System.out.println(count);
         return null;
@@ -49,7 +48,9 @@ public class SimpleBacktracking extends BacktrackingBase implements ConstraintSo
         }
 
         for (int i = 0; i < colorNum; i++) {
+            count++;
             if(checkColor(g.getNeighbors(), color, i, vertex)) {
+
                 color[vertex] = i;
                 if (simpleBacktracking(g, color, colorNum, vertex+1)) {
                     return true;

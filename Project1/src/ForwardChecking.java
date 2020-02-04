@@ -5,10 +5,8 @@ import java.util.ArrayList;
  * Implementation to solve the graph coloring problem using backtracking with forward checking
  */
 public class ForwardChecking extends BacktrackingBase implements ConstraintSolverStrategy {
-    private final static Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
     private int color[];
     private ArrayList<Integer>[] domain;
-    public int count = 0;
     /**
      * Set up backtracking with forward checking.
      *
@@ -17,6 +15,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
      */
     @Override
     public Graph solve(Graph g, int colorNum) {
+        count = 1;
         color = new int[g.getGraphSize()];
         domain = (ArrayList<Integer>[]) new ArrayList[g.getGraphSize()];
         for (int i = 0; i < color.length; i++) {
@@ -30,15 +29,15 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
             domain[d] = tempColors;
         }
         if (forwardChecking(g, color, colorNum, 0)) {
-            for(int i = 0; i < color.length; i++) {
-                g.getNodelist()[i].setC(colorArray[color[i]]);
-            }
+//            for(int i = 0; i < color.length; i++) {
+//                g.getNodelist()[i].setC(colorArray[color[i]]);
+//            }
         } else {
             System.out.println("No solution");
         }
-        for(int i = 0; i < color.length; i++) {
-            System.out.println("Node "+i+": "+color[i]);
-        }
+//        for(int i = 0; i < color.length; i++) {
+//            System.out.println("Node "+i+": "+color[i]);
+//        }
         System.out.println("Forward checking count:");
         System.out.println(count);
 
@@ -58,6 +57,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
         count++;
 
         for (int i = 0; i < domain[vertex].size(); i++) {
+            count++;
             if(checkColor(g.getNeighbors(), color, domain[vertex].get(i), vertex)) {
                 color[vertex] = domain[vertex].get(i);
                 if(vertex != g.getGraphSize()-1) {
@@ -90,6 +90,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
     private ArrayList<Integer> generateDomain(Graph g, int vertex, int[] color) {
         ArrayList<Integer> currentDomain = new ArrayList<Integer>();
         for (int i = 0; i < domain[vertex].size(); i++) {
+            count++;
             if (checkColor(g.getNeighbors(), color, i, vertex)) {
                 currentDomain.add(i);
             }

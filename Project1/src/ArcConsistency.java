@@ -6,9 +6,9 @@ import java.util.Queue;
 public class ArcConsistency implements ConstraintSolverStrategy {
     private final static Color colorArray[] = {Color.blue, Color.green, Color.red, Color.yellow};
     private int color[];
-    public int count = 0;
     private Queue<Edge> q = new LinkedList<Edge>();
     private ArrayList<Integer>[] domain;
+    public int count = 0;
 
     @Override
     public Graph solve(Graph g, int colorNum) {
