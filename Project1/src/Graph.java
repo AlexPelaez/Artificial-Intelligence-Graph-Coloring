@@ -21,7 +21,7 @@ public class Graph {
      * Constructor for the {@code Graph}.
      *
      * @param n {@code int} lets {@code Graph} know the number of nodes
-     * that it is required to generate.
+     *          that it is required to generate.
      */
     public Graph(int n) {
         this.n = n;
@@ -40,6 +40,7 @@ public class Graph {
 //        neighbors[8] = new int[] {1,  1,  0,  1,  0,  0,  0,  1,  0,  0 };
 //        neighbors[9] = new int[] {1,  0,  1,  0,  1,  1,  0,  0,  0,  0 };
     }
+
     /**
      * Translates a character array representation of a
      * {@code BigDecimal} into a {@code BigDecimal}, accepting the
@@ -50,14 +51,15 @@ public class Graph {
         float y;
 
         nodelist = new Node[n];
-        for(int i= 0; i < nodelist.length; i++) {
+        for (int i = 0; i < nodelist.length; i++) {
             do {
                 x = formatFloat((float) Math.random());
                 y = formatFloat((float) Math.random());
             } while (x == 0 || y == 0);
-            nodelist[i] = new Node(x,y,null);
+            nodelist[i] = new Node(x, y, null);
         }
     }
+
     /**
      * Generates the adjacency matrix and stores it in a {@code int} array.
      */
@@ -66,8 +68,8 @@ public class Graph {
         int closestNode;
 
         neighbors = new int[n][n];
-        while(!checkAllNodes()){
-            randNode = (int)(Math.random()*n);
+        while (!checkAllNodes()) {
+            randNode = (int) (Math.random() * n);
             closestNode = closestNeighbor(randNode);
             if (closestNode != -1) {
                 neighbors[randNode][closestNode] = 1;
@@ -76,12 +78,12 @@ public class Graph {
             }
         }
     }
+
     /**
      * Finds the closest neighboring {@code Node} to the
      * {@code Node} that is passed in args.
      *
      * @param node {@code int} array that is the source of characters.
-     *
      * @return a {@code int} that represents the index of the closest
      * neighboring node in the nodelist
      */
@@ -90,7 +92,7 @@ public class Graph {
         float currentDistance;
         int closestIndex = -1;
 
-        for(int i= 0; i < nodelist.length; i++) {
+        for (int i = 0; i < nodelist.length; i++) {
             if (i != node && neighbors[node][i] == 0) {
                 if (!checkIntersections(nodelist[node], nodelist[i])) {
                     currentDistance = calculateDistance(nodelist[node], nodelist[i]);
@@ -104,6 +106,7 @@ public class Graph {
         //System.out.println(closestIndex);
         return closestIndex;
     }
+
     /**
      * Checks if the a new edge between two {@code Node} intersects
      * with any of the pre-existing edges. When a collision is found
@@ -111,8 +114,7 @@ public class Graph {
      *
      * @param n1 {@code Node} point one.
      * @param n2 {@code Node} point two.
-     *                        
-     * @return a {@code boolean} that is true if the new edge we are trying 
+     * @return a {@code boolean} that is true if the new edge we are trying
      * to construct between n1 and n2 intersects with any pre-existing lines.
      */
     private boolean checkIntersections(Node n1, Node n2) {
@@ -123,8 +125,8 @@ public class Graph {
         float intersectionX;
         float intersectionY;
 
-        m1 = calculateSlope(n1,n2);
-        b1 = (-m1)*(n1.getX())+n1.getY();
+        m1 = calculateSlope(n1, n2);
+        b1 = (-m1) * (n1.getX()) + n1.getY();
 
         final float lowX1 = Math.min(n1.getX(), n2.getX());
         final float highX1 = Math.max(n1.getX(), n2.getX());
@@ -147,9 +149,8 @@ public class Graph {
                     float highY2 = Math.max(nodelist[i].getY(), nodelist[j].getY());
 
 
-
-                    if(intersectionX > lowX1 && intersectionX < highX1){
-                        if(intersectionY > lowY1 && intersectionY < highY1) {
+                    if (intersectionX > lowX1 && intersectionX < highX1) {
+                        if (intersectionY > lowY1 && intersectionY < highY1) {
                             if (intersectionX > lowX2 && intersectionX < highX2) {
                                 if (intersectionY > lowY2 && intersectionY < highY2) {
                                     return true;
@@ -163,46 +164,46 @@ public class Graph {
         }
         return false;
     }
+
     /**
      * Checks if all nodes that can have a closest neighbor without any
      * intersections do. If they do the method returns true and the while loop
      * in populateAdjacencyMatrix() terminates.
-
      *
      * @return a {@code boolean} that is true if all nodes in a graph are attached to a neighbor
      * that they can be attached to.
      */
 
-    private boolean checkAllNodes(){
-        for(int i =0; i < neighbors.length; i++){
-            for (int j = 0; j < neighbors.length; j++){
-                    if (neighbors[i][j] == 0 && i !=j){
-                        if(!checkIntersections(nodelist[i], nodelist[j])) {
-                            return false;
-                        }
+    private boolean checkAllNodes() {
+        for (int i = 0; i < neighbors.length; i++) {
+            for (int j = 0; j < neighbors.length; j++) {
+                if (neighbors[i][j] == 0 && i != j) {
+                    if (!checkIntersections(nodelist[i], nodelist[j])) {
+                        return false;
                     }
+                }
             }
         }
         return true;
     }
+
     /**
      * Calculates the slope between two given {@code Node}.
      *
      * @param n1 {@code Node} point one.
      * @param n2 {@code Node} point two.
-     *
      * @return a {@code float} that is the slope or 'm' in
      * the equation 'y=m(x)+b'.
      */
     private float calculateSlope(Node n1, Node n2) {
-        return (n2.getY()-n1.getY())/(n2.getX()-n1.getX());
+        return (n2.getY() - n1.getY()) / (n2.getX() - n1.getX());
     }
+
     /**
      * Calculates the distance between two given {@code Node}.
      *
      * @param n1 {@code Node} point one.
      * @param n2 {@code Node} point two.
-     *
      * @return a {@code float} that is the distance
      * between n1 and n2.
      */
@@ -212,11 +213,11 @@ public class Graph {
 
         return (float) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
     }
+
     /**
      * Formats {@code float} to the correct number of decimal points.
      *
      * @param f {@code float} float to be formatted.
-     *
      * @return a {@code float} properly formatted float.
      */
     private float formatFloat(float f) {
@@ -224,15 +225,17 @@ public class Graph {
         bd = bd.setScale(4, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
     }
+
     public ArrayList<Integer> getNeighborsForVertex(int vertex) {
         ArrayList<Integer> neighborIndexs = new ArrayList<Integer>();
-        for(int i = 0; i < neighbors.length; i++){
-            if(neighbors[vertex][i] == 1) {
+        for (int i = 0; i < neighbors.length; i++) {
+            if (neighbors[vertex][i] == 1) {
                 neighborIndexs.add(i);
             }
         }
         return neighborIndexs;
     }
+
     /**
      * Get methods
      */
@@ -247,38 +250,36 @@ public class Graph {
     public int[][] getNeighbors() {
         return neighbors;
     }
+
     /**
      * Prints the nodelist[] to the terminal.
      */
     public void printNodeList() {
-        for(int i = 0; i < nodelist.length; i++) {
-            System.out.println("(" + nodelist[i].getX()+", "+ nodelist[i].getY()+")");
+        for (int i = 0; i < nodelist.length; i++) {
+            System.out.println("(" + nodelist[i].getX() + ", " + nodelist[i].getY() + ")");
         }
     }
+
     /**
      * Prints the AdjacencyMatrix[][] to the terminal.
      */
     public void printAdjacencyMatrix() {
         System.out.print("   ");
-        for(int i = 0; i < neighbors.length; i++) {
+        for (int i = 0; i < neighbors.length; i++) {
             System.out.print(" " + i + " ");
         }
         System.out.println();
 
-        for(int i = 0; i < neighbors.length; i++) {
+        for (int i = 0; i < neighbors.length; i++) {
             System.out.print(" " + i + " ");
-            for (int j = 0; j < neighbors.length; j++){
-                if(i == j){
+            for (int j = 0; j < neighbors.length; j++) {
+                if (i == j) {
                     System.out.print(" " + "-" + " ");
-                }
-                else {
+                } else {
                     System.out.print(" " + neighbors[i][j] + " ");
                 }
             }
             System.out.println();
         }
     }
-
-
-
 }
