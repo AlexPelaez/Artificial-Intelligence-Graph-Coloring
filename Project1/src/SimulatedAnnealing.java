@@ -6,8 +6,6 @@ import java.util.Random;
  */
 
 public class SimulatedAnnealing implements ConstraintSolverStrategy {
-    private double temp;
-    private int steps;
     private int color[];
     Random random = new Random();
 
@@ -15,8 +13,6 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
     @Override
     public Graph solve(Graph g, int colorNum) {
 
-        steps = 0;
-        temp = 1000000;
 
 
         color = new int[g.getGraphSize()];
@@ -24,13 +20,17 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             color[i] = random.nextInt(colorNum);
         }
 
-        simulatedAnnealing(color, temp, steps, g.getNeighbors(), colorNum);
+        simulatedAnnealing(color,  g.getNeighbors(), colorNum);
 
         return null;
     }
 
-    public void simulatedAnnealing(int c[], double t, int steps, int neighbors[][], int colorNum) {
+    public void simulatedAnnealing(int c[],  int neighbors[][], int colorNum) {
         int[] current = c;
+        double T  = 10000000;
+        int steps = 0;
+        double t = 1.0;
+
 
 
         int randNode = -1;
@@ -41,7 +41,8 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
         }
 
 
-        while (t > 0) {
+        while (true) {
+
 
             boolean conflict = true;
 
@@ -49,14 +50,18 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             boolean newConflictNodes[];
 
 
-            t = updateSchedule(t, steps);
+            T = updateSchedule(T, steps, t);
             System.out.println("T: " + t);
-            if (t == 0) {
+
+            if (T == 0) {
                 System.out.println("Done");
+                for(int i = 0; i < current.length; i++){
+                    System.out.println(current[i]);
+                }
                 break;
             }
 
-            
+
 
 
             conflictNodes = checkConflict(neighbors, current);
@@ -65,8 +70,10 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
 
                 randNode = random.nextInt(conflictNodes.length);
                 if (conflictNodes[randNode] == true) {
+
                     next[randNode] = minCost(neighbors, colorNum, current, randNode);
                 }
+
 
             newConflictNodes = checkConflict(neighbors, next);
 
@@ -75,13 +82,21 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             double k = 1.380649 * Math.pow(10, -23);
             System.out.println("Steps: " + steps);
 
-            if (deltaEnergy < 0) {
+            double randChance = (Math.random()*100) + 1;
+
+            if (deltaEnergy <= 0) {
                 current = next;
+                steps++;
             } else {
                 double probability = (double)Math.exp(deltaEnergy / k * t);
-                steps++;
-                System.out.println("prob: " + probability);
+                if(randChance < probability){
+                    current = next;
+                    steps++;
+                }
+
+
             }
+
 
         }
 
@@ -135,10 +150,9 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
         return counter;
     }
 
-    private double updateSchedule(double t, int numSteps){
-        double aplha  = .95;
-        double newTemp = (t * aplha) / (t + numSteps);
-        return newTemp;
+    private double updateSchedule(double t, int numSteps, double alpha){
+        return  (t * alpha) / (alpha + numSteps);
+
 
 
 
