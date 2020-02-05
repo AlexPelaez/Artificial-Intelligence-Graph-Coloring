@@ -87,7 +87,6 @@ public class ArcConsistency extends BacktrackingBase implements ConstraintSolver
      * @param g {@code Graph} representation of the graph.
      */
     private void arcConsistency(Graph g) {
-        count++;
         for(int i = 0; i < g.getNeighbors().length; i++) {
             for(int j = 0; j < g.getNeighbors().length; j++) {
                 if (g.getNeighbors()[i][j] == 1 && color[i]==-1&& color[j]==-1) {
@@ -122,7 +121,6 @@ public class ArcConsistency extends BacktrackingBase implements ConstraintSolver
      * @return a {@code boolean} that represents if a value has been removed.
      */
     private boolean removeInconsistentValues(Graph g, int[] color, int n1, int n2) {
-        count++;
         boolean removed = false;
         boolean hasDomain = false;
         ArrayList<Integer> tempDomain;

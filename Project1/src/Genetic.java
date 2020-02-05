@@ -66,6 +66,7 @@ public class Genetic implements ConstraintSolverStrategy {
                 nPop.add(m2);
             }
             pop = nPop;
+
             numSteps++;
             temp = updateTemp(temp, numSteps);
 
