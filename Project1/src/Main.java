@@ -9,7 +9,12 @@ public class Main {
         graphs[0] = new Graph(10);
 //        graphs[1] = graphs[0];
         Context c = new Context(new Genetic());
+        c.setStrategy(new SimulatedAnnealing());
         c.strategyOperation(graphs[0], 4);
+//        for(int i = 0; i < 100; i++ ){
+//            c.strategyOperation(graphs[0], 4);
+//        }
+
 //        c.strategyOperation(graphs[0], 4);
 //        System.out.println();
 //        c = new Context(new ArcConsistency());

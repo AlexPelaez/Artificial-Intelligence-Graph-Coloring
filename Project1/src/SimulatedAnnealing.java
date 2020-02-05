@@ -29,7 +29,7 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
         int[] current = c;
         double T  = 10000000;
         int steps = 0;
-        double t = 1.0;
+        double t = 5.0;
 
 
 
@@ -176,13 +176,6 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             }
         }
         return conflict;
-    }
-    private int[] changeColor(int colorIndex, int index, int colors[]){
-
-        int [] temp = colors;
-        temp[index] = colorIndex;
-        return  temp;
-
     }
 
     private boolean checkColor(int adjacencyMatrix[][], int a[], int colorNum, int index) {
