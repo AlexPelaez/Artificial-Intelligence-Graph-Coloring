@@ -31,17 +31,13 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
         } else {
             System.out.println("No solution");
         }
-<<<<<<< HEAD
 
-        return count;
-=======
 //        for(int i = 0; i < color.length; i++) {
 //            System.out.println("Node "+i+": "+color[i]);
 //        }
 
 
         return (-1)*count;
->>>>>>> 8209da28e9c18420c52e444f98b2b500bfb5b4b4
     }
     /**
      * Recursive backtracking function.

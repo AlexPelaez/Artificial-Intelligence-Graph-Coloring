@@ -5,21 +5,24 @@ public class Main {
         final ConstraintSolverStrategy[] backtrackingSolvers = {new ForwardChecking(), new SimpleBacktracking(), new ArcConsistency()};
         Graph backtrackingGraphs[][] = new Graph[3][10];
         Context c = new Context();
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 10; j++) {
-                backtrackingGraphs[i][j] = new Graph((10*(i+1)));
-            }
-        }
-        int count = 0;
-        for(int i = 0; i < 3; i++) {
-            c.setStrategy(backtrackingSolvers[i]);
-            System.out.println(backtrackingSolvers[i].getClass().getName());
-            for(int j = 0; j < 10; j++) {
-                count = count + c.strategyOperation(backtrackingGraphs[i][j], 4);
-            }
-            count = count/10;
-            System.out.println(count);
-        }
+        c.setStrategy((new SimulatedAnnealing()));
+        backtrackingGraphs[0][0] = new Graph(10);
+        c.strategyOperation(backtrackingGraphs[0][0], 2);
+//        for(int i = 0; i < 3; i++) {
+//            for(int j = 0; j < 10; j++) {
+//                backtrackingGraphs[i][j] = new Graph((10*(i+1)));
+//            }
+//        }
+//        int count = 0;
+//        for(int i = 0; i < 3; i++) {
+//            c.setStrategy(backtrackingSolvers[i]);
+//            System.out.println(backtrackingSolvers[i].getClass().getName());
+//            for(int j = 0; j < 10; j++) {
+//                count = count + c.strategyOperation(backtrackingGraphs[i][j], 4);
+//            }
+//            count = count/10;
+//            System.out.println(count);
+//        }
 
 //        for (int j = 0; j < 3; j++) {
 //            System.out.println("Graph : " + (j + 1) * 10);
