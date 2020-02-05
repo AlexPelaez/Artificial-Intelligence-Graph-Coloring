@@ -34,16 +34,13 @@ public class ArcConsistency extends BacktrackingBase implements ConstraintSolver
         } else {
             System.out.println("No solution");
         }
-<<<<<<< HEAD
 
         return count*(-1);
-=======
+
 //        for(int i = 0; i < color.length; i++) {
 //            System.out.println(color[i]);
 //        }
 
-        return (-1)*count;
->>>>>>> 8209da28e9c18420c52e444f98b2b500bfb5b4b4
     }
     /**
      * Recursive function similar to SimpleBacktracking.java with added check to
