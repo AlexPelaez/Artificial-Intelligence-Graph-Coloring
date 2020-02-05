@@ -11,25 +11,21 @@ public class SimpleBacktracking extends BacktrackingBase implements ConstraintSo
      * @param colorNum {@code int} number of colors being used for this search
      */
     @Override
-    public Graph solve(Graph g, int colorNum) {
+    public int solve(Graph g, int colorNum) {
         count = 1;
         color = new int[g.getGraphSize()];
         for (int i = 0; i < color.length; i++) {
             color[i] = 0;
         }
         if (simpleBacktracking(g, color, colorNum, 0)) {
-            for(int i = 0; i < color.length; i++) {
-                g.getNodelist()[i].setC(colorArray[color[i]]);
-            }
+            return count;
         } else {
             System.out.println("No solution");
         }
 //        for(int i = 0; i < color.length; i++) {
 //            System.out.println("Node "+i+": "+color[i]);
 //        }
-        System.out.println("Simple Backtracking count:");
-        System.out.println(count);
-        return null;
+        return (-1)*count;
     }
     /**
      * Recursive backtracking function.

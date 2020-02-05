@@ -18,7 +18,7 @@ public class ArcConsistency extends BacktrackingBase implements ConstraintSolver
      * @param colorNum {@code int} number of colors being used for this search.
      */
     @Override
-    public Graph solve(Graph g, int colorNum) {
+    public int solve(Graph g, int colorNum) {
         color = new int[g.getGraphSize()];
         domain = (ArrayList<Integer>[]) new ArrayList[g.getGraphSize()];
         for (int i = 0; i < color.length; i++) {
@@ -32,19 +32,15 @@ public class ArcConsistency extends BacktrackingBase implements ConstraintSolver
             domain[d] = tempColors;
         }
         if (checkArcBacktrack(g, color, colorNum, 0)) {
-            for(int i = 0; i < color.length; i++) {
-                g.getNodelist()[i].setC(colorArray[color[i]]);
-            }
+            return count;
         } else {
             System.out.println("No solution");
         }
 //        for(int i = 0; i < color.length; i++) {
 //            System.out.println(color[i]);
 //        }
-        System.out.println("Arc Consistency count:");
-        System.out.println(count);
 
-        return null;
+        return (-1)*count;
     }
     /**
      * Recursive function similar to SimpleBacktracking.java.

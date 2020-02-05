@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +13,7 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
      * @param colorNum {@code int} number of colors being used for this search.
      */
     @Override
-    public Graph solve(Graph g, int colorNum) {
+    public int solve(Graph g, int colorNum) {
         count = 1;
         color = new int[g.getGraphSize()];
         domain = (ArrayList<Integer>[]) new ArrayList[g.getGraphSize()];
@@ -29,17 +28,16 @@ public class ForwardChecking extends BacktrackingBase implements ConstraintSolve
             domain[d] = tempColors;
         }
         if (forwardChecking(g, color, colorNum, 0)) {
-
+            return count;
         } else {
             System.out.println("No solution");
         }
 //        for(int i = 0; i < color.length; i++) {
 //            System.out.println("Node "+i+": "+color[i]);
 //        }
-        System.out.println("Forward checking count:");
-        System.out.println(count);
 
-        return null;
+
+        return (-1)*count;
     }
     /**
      * Recursive backtracking function.

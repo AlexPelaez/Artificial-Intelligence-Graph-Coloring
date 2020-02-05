@@ -10,7 +10,7 @@ public class Context {
         strategy = s;
     }
 
-    public Graph strategyOperation(Graph g, int colorNum) {
+    public int strategyOperation(Graph g, int colorNum) {
         return strategy.solve(g, colorNum);
     }
 
