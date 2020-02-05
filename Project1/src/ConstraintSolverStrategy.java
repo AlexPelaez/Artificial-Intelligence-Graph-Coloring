@@ -1,7 +1,7 @@
-/**
- * Created by Alex on 1/28/20.
+
+/*
+ * Interface that serves as a template for our solving algorithms.
  */
-import java.awt.Color;
 public interface ConstraintSolverStrategy {
-    Graph solve(Graph g, int colorNum);
+    int solve(Graph g, int colorNum);
 }

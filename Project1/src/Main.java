@@ -2,23 +2,23 @@ public class Main {
 
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
-        final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking(), new ArcConsistency()};
-        Graph graphs[][] = new Graph[3][10];
+        final ConstraintSolverStrategy[] backtrackingSolvers = {new ForwardChecking(), new SimpleBacktracking(), new ArcConsistency()};
+        Graph backtrackingGraphs[][] = new Graph[3][10];
         Context c = new Context();
-
-//        c.strategyOperation(graphs[0], 4);
-
-
-
-//        for(int i = 0; i < 4; i++) {
-//            graphs[i] = new Graph((10*(i+1)));
-//        }
-
-
-        for(int i = 0; i < 4; i++) {
-            for(int j = 0; j < 4; j++) {
-                graphs[i][j] = new Graph((10*(i+1)));
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 10; j++) {
+                backtrackingGraphs[i][j] = new Graph((10*(i+1)));
             }
+        }
+        int count = 0;
+        for(int i = 0; i < 3; i++) {
+            c.setStrategy(backtrackingSolvers[i]);
+            System.out.println(backtrackingSolvers[i].getClass().getName());
+            for(int j = 0; j < 10; j++) {
+                 count = count + c.strategyOperation(backtrackingGraphs[i][j], 4);
+            }
+            count = count/10;
+            System.out.println(count);
         }
 
 //        for (int j = 0; j < 3; j++) {
