@@ -6,17 +6,17 @@ public class Genetic implements ConstraintSolverStrategy {
     private int color[];
     private int finalColor[];
     private int counter= 0;
+    private int numSteps = 0;
 
     @Override
-    public Graph solve(Graph g, int colorNum) {
+    public int solve(Graph g, int colorNum) {
         color = new int[g.getGraphSize()];
         if(geneticAlgorithm(g.getNeighbors(), colorNum)){
-            counter++;
-            System.out.println("Here: " + counter);
+            return numSteps;
 
         }
 
-        return null;
+        return numSteps * -1 ;
     }
 
 
@@ -39,7 +39,6 @@ public class Genetic implements ConstraintSolverStrategy {
             for (int i = 0; i < pop.size() ;i++) {
                 if (checkConstraints(adjacencyMatrix, pop.get(i))) {
                     finalColor = pop.get(i);
-                    "System.out.println("******************");"
 
                     return true;
                 }

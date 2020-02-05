@@ -7,11 +7,12 @@ import java.util.Random;
 
 public class SimulatedAnnealing implements ConstraintSolverStrategy {
     private int color[];
-    Random random = new Random();
+    private Random random = new Random();
+    private int steps = 0;
 
 
     @Override
-    public Graph solve(Graph g, int colorNum) {
+    public int solve(Graph g, int colorNum) {
 
 
 
@@ -20,15 +21,21 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             color[i] = random.nextInt(colorNum);
         }
 
-        simulatedAnnealing(color,  g.getNeighbors(), colorNum);
 
-        return null;
+
+        if (simulatedAnnealing(color,  g.getNeighbors(), colorNum)){
+            return steps;
+
+        }
+        return steps * -1;
+
+
     }
 
-    public void simulatedAnnealing(int c[],  int neighbors[][], int colorNum) {
+    public boolean simulatedAnnealing(int c[],  int neighbors[][], int colorNum) {
         int[] current = c;
         double T  = 10000000;
-        int steps = 0;
+
         double t = 5.0;
 
 
@@ -54,10 +61,8 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             System.out.println("T: " + t);
 
             if (T == 0) {
-                System.out.println("Done");
-                for(int i = 0; i < current.length; i++){
-                    System.out.println(current[i]);
-                }
+                if(checkConstraints(neighbors, current))
+                    return true;
                 break;
             }
 
@@ -99,6 +104,7 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
 
 
         }
+        return false;
 
 
     }
@@ -183,6 +189,21 @@ public class SimulatedAnnealing implements ConstraintSolverStrategy {
             if (adjacencyMatrix[i][index] == 1) {
                 if (colorNum == a[i]) {
                     return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkConstraints(int[][] adjacencyMatrix, int [] a) {
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            for (int j = 0; j < adjacencyMatrix.length; j++) {
+                if(i != j){
+                    if (adjacencyMatrix[i][j] == 1) {
+                        if (a[i] == a[j]) {
+                            return false;
+                        }
+                    }
                 }
             }
         }
