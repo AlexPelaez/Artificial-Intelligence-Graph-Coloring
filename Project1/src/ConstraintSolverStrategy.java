@@ -3,5 +3,5 @@
  */
 import java.awt.Color;
 public interface ConstraintSolverStrategy {
-    Graph solve(Graph g, int colorNum);
+    int solve(Graph g, int colorNum);
 }
