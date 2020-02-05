@@ -1,4 +1,3 @@
-import java.awt.Color;
 /**
  * Implementation to solve the graph coloring problem using simple backtracking
  */
@@ -20,7 +19,7 @@ public class SimpleBacktracking extends BacktrackingBase implements ConstraintSo
         if (simpleBacktracking(g, color, colorNum, 0)) {
             return count;
         }
-//
+
         return (-1)*count;
     }
     /**
