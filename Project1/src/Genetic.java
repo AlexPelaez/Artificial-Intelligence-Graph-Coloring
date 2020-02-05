@@ -42,7 +42,7 @@ public class Genetic implements ConstraintSolverStrategy {
                 nPop.add(n[2]);
                 nPop.add(n[3]);
             }
-            population = (int[]) nPop.toArray();
+//            population = (int[]) nPop.toArray();
             numSteps++;
             temp = updateTemp(temp, numSteps);
 

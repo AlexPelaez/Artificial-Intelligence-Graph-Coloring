@@ -2,26 +2,24 @@ public class Main {
 
 // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
+        final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking(), new ArcConsistency()};
+        Graph graphs[][] = new Graph[3][10];
+        Context c = new Context();
 
-        final ConstraintSolverStrategy[] solvers = {new ForwardChecking(), new SimpleBacktracking()};
-
-        Graph graphs[] = new Graph[10];
-        graphs[0] = new Graph(10);
-//        graphs[1] = graphs[0];
-        Context c = new Context(new Genetic());
-        c.strategyOperation(graphs[0], 4);
 //        c.strategyOperation(graphs[0], 4);
-//        System.out.println();
-//        c = new Context(new ArcConsistency());
 
-//
-//        c.strategyOperation(graphs[1], 4);
-//        graphs[1].printNodeList();
-//        graphs[1].printAdjacencyMatrix();
+
 
 //        for(int i = 0; i < 4; i++) {
 //            graphs[i] = new Graph((10*(i+1)));
 //        }
+
+
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 4; j++) {
+                graphs[i][j] = new Graph((10*(i+1)));
+            }
+        }
 
 //        for (int j = 0; j < 3; j++) {
 //            System.out.println("Graph : " + (j + 1) * 10);
