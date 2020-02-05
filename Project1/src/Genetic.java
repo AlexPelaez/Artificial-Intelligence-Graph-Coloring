@@ -1,134 +1,178 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Genetic implements ConstraintSolverStrategy {
 
-    private int population[][];
     private int color[];
+    private int finalColor[];
+    private int counter= 0;
+    private int numSteps = 0;
+
     @Override
-    public Graph solve(Graph g, int colorNum) {
-        int k = 2*((int)(Math.random()*49)+1);
+    public int solve(Graph g, int colorNum) {
         color = new int[g.getGraphSize()];
-        population = new int[k][g.getGraphSize()];
-        for (int i = 0; i < k; i++) {
-            for (int j=0; j <color.length; j++) {
-                population[i][j] = (int) (Math.random() * colorNum);
-            }
+        if(geneticAlgorithm(g.getNeighbors(), colorNum)){
+            return numSteps;
+
         }
-        geneticAlgorithm(g.getNeighbors(), colorNum, k);
-        return null;
+
+        return numSteps * -1 ;
     }
 
 
+    private boolean geneticAlgorithm(int[][] adjacencyMatrix, int colorNum) {
+        ArrayList<int[]> pop = new ArrayList();
+        int k = 2 * ((int) (Math.random() * 49) + 1);
 
-    private boolean geneticAlgorithm(int[][] adjacencyMatrix, int colorNum, int k) {
-        ArrayList<int[]> nPop = new ArrayList();
-        double temp = 1000;
+        double temp = 10000;
         int numSteps = 0;
-        while(temp != 0) {
-            System.out.println("here");
-            for(int i = 0; i < k; i++ ) {
-                if (checkConstraints(adjacencyMatrix, population[i])) {
+
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; j < color.length; j++) {
+                color[j] = (int) (Math.random() * 4);
+            }
+            pop.add(color);
+        }
+
+
+        while (temp != 0) {
+            for (int i = 0; i < pop.size() ;i++) {
+                if (checkConstraints(adjacencyMatrix, pop.get(i))) {
+                    finalColor = pop.get(i);
+
                     return true;
                 }
             }
 
-            for(int i = 0; i < k/2; i++) {
+            ArrayList<int[]> nPop = new ArrayList();
 
-                int a[] = tournamentSelection(adjacencyMatrix, k);
-                int[][] n = crossover(a[0], a[1]);
+//            for(int i = 0; i < k; i++ ) {
+//                if (checkConstraints(adjacencyMatrix, population[i])) {
+//                    return true;
+//                }
+//            }
 
-                n[2] =  mutate(n[2], colorNum);
-                n[3] = mutate(n[3], colorNum);
-                nPop.add(n[2]);
-                nPop.add(n[3]);
+            for (int i = 0; i < k / 2; i++) {
+
+                int a1[] = tournamentSelection(adjacencyMatrix, pop, temp, k);
+                int a2[] = tournamentSelection(adjacencyMatrix, pop, temp, k);
+                ArrayList<int[]> crossed= crossover(a1,a2);
+
+                int[] m1 = mutate(crossed.remove(crossed.size() - 1), colorNum);
+                int[] m2 = mutate(crossed.remove(crossed.size() - 1), colorNum);
+
+                nPop.add(m1);
+                nPop.add(m2);
             }
-//            population = (int[]) nPop.toArray();
+            pop = nPop;
+
             numSteps++;
             temp = updateTemp(temp, numSteps);
 
         }
-        return true;
+
+        int minimumConstraints = 1000;
+        int minimumConstraintIndex = -1;
+
+        for(int i = 0; i <pop.size(); i++){
+            int consNum = countConstraints(pop.get(i), adjacencyMatrix);
+            if (consNum < minimumConstraints){
+                minimumConstraints = consNum;
+            }
+            minimumConstraintIndex = i;
+        }
+        finalColor = pop.get(minimumConstraintIndex);
+        return false;
     }
 
     private int[] mutate(int[] ints, int colorNum) {
-        double probability = 1/color.length;
+        double probability = 1.0 / color.length;
 
-        for(int i = 0; i < color.length; i++) {
+        for (int i = 0; i < color.length; i++) {
             double k = Math.random();
-            if(k < probability) {
-                int randColor = ((int)(Math.random()*4));
+            if (k < probability) {
+                int randColor = ((int) (Math.random() * 4));
                 ints[i] = randColor;
             }
         }
         return ints;
     }
 
-    private int[][] crossover(int a1, int a2) {
-        int rand = ((int)(Math.random()*color.length)+1);
-        int[][] tempPopulation = new int[4][color.length];
-        tempPopulation[0] = population[a1];
-        tempPopulation[1] = population[a2];
-        for(int i = 0; i < rand; i++){
-            tempPopulation[2][i] = tempPopulation[0][i];
-            tempPopulation[3][i] = tempPopulation[1][i];
+    private ArrayList<int[]> crossover(int[] a1, int[] a2) {
+        int rand = ((int) (Math.random() * color.length) + 1);
+        ArrayList<int[]> crossPop = new ArrayList<>();
+//        int[][] tempPopulation = new int[4][color.length];
+        int[] tempIndividual1 = a1;
+        int[] tempIndividual2 = a2;
+        for (int i = 0; i < rand; i++) {
+            tempIndividual1[i] = a1[i];
+            tempIndividual2[i] = a2[i];
         }
-        for(int i = rand; i < color.length; i++){
-            tempPopulation[2][i] = tempPopulation[0][i];
-            tempPopulation[3][i] = tempPopulation[1][i];
+        for (int i = rand; i < color.length; i++) {
+            tempIndividual1[i] = a2[i];
+            tempIndividual2[i] = a1[i];
         }
-        return tempPopulation;
+        crossPop.add(tempIndividual1);
+        crossPop.add(tempIndividual2);
+        return crossPop;
     }
 
-    private int[] tournamentSelection(int[][] adjacencyMatrix, int k) {
-        int q = ((int) (Math.random()*k)+2);
-        int[] selectedIndividuals = new int[q];
+    private int[] tournamentSelection(int[][] adjacencyMatrix, ArrayList<int[]> pop, double T, int k) {
+
+        ArrayList<int[]> selectedIndividuals = new ArrayList<>();
+        int q = ((int) (Math.random() * (k - 2 + 1)) + 2);
         int randTemp = 0;
-        int countTempMain = 0;
-        int countIndexMain = 0;
-        int countTempSec = 0;
-        int countIndexSec = 0;
-        int []countIndex = new int[2];
-        for(int i = q-1; i >= 0; i--) {
-            randTemp = ((int) Math.random()*i);
-            selectedIndividuals[i] = randTemp;
+        int minConstraints = 1000;
+        int minConstraintIndex = -1;
+
+        for (int i = q - 1; i >= 0; i--) {
+            randTemp = ((int) Math.random() * i);
+            selectedIndividuals.add(pop.get(randTemp));
         }
-        int[] counter = new int[q];
+
+        for(int i = 0; i <selectedIndividuals.size(); i++){
+            int temp = countConstraints(selectedIndividuals.get(i), adjacencyMatrix);
+            if (temp < minConstraints){
+                minConstraints = temp;
+            }
+            minConstraintIndex = i;
+        }
+
+        return selectedIndividuals.get(minConstraintIndex);
+
+
+    }
+
+
+    private int countConstraints(int[] a, int[][] adjacencyMatrix){
+        int count = 0;
         for (int i = 0; i < adjacencyMatrix.length; i++) {
             for (int j = 0; j < adjacencyMatrix.length; j++) {
-                if (adjacencyMatrix[i][j] == 1) {
-                    for(int m = 0; m < selectedIndividuals.length; m++){
-                        if(population[selectedIndividuals[m]][i] == population[selectedIndividuals[m]][j]){
-                            counter[m]++;
-                        }
+                if (j>i && adjacencyMatrix[i][j] == 1) {
+                    if(a[i]==a[j]){
+                        count++;
+
                     }
                 }
             }
         }
-
-        for (int i = 0; i < counter.length; i++) {
-            if(countTempMain > counter[i]) {
-                countIndexSec = countIndexMain;
-                countTempMain = counter[i];
-                countIndexMain = i;
-            }
-        }
-        countIndex[0] = countIndexMain;
-        countIndex[1] = countIndexSec;
-        return countIndex;
+        return count;
     }
 
     private double updateTemp(double t, int numSteps){
-        double aplha  = .95;
-        double newTemp = (t * aplha) / (t + numSteps);
+        double alpha  = 5;
+        double newTemp = (t * alpha) / (alpha + numSteps);
         return newTemp;
     }
 
-    private boolean checkConstraints(int[][] adjacencyMatrix, int population[]) {
+    private boolean checkConstraints(int[][] adjacencyMatrix, int [] a) {
         for (int i = 0; i < adjacencyMatrix.length; i++) {
             for (int j = 0; j < adjacencyMatrix.length; j++) {
-                if (j>i && adjacencyMatrix[i][j] == 1) {
-                    if(color[i]==color[j]){
-                        return false;
+                if(i != j){
+                    if (adjacencyMatrix[i][j] == 1) {
+                        if (a[i] == a[j]) {
+                            return false;
+                        }
                     }
                 }
             }

@@ -1,6 +1,6 @@
 public class Main {
 
-// The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
+    // The issue might be caused by floating point numbers not being accurate enough in the equation that checks the intersection
     public static void main(String[] args) {
         final ConstraintSolverStrategy[] backtrackingSolvers = {new ForwardChecking(), new SimpleBacktracking(), new ArcConsistency()};
         Graph backtrackingGraphs[][] = new Graph[3][10];
@@ -15,7 +15,7 @@ public class Main {
             c.setStrategy(backtrackingSolvers[i]);
             System.out.println(backtrackingSolvers[i].getClass().getName());
             for(int j = 0; j < 10; j++) {
-                 count = count + c.strategyOperation(backtrackingGraphs[i][j], 4);
+                count = count + c.strategyOperation(backtrackingGraphs[i][j], 4);
             }
             count = count/10;
             System.out.println(count);

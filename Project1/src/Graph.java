@@ -25,20 +25,20 @@ public class Graph {
      */
     public Graph(int n) {
         this.n = n;
-//        populateNodelist();
-//        populateAdjacencyMatrix();
-        neighbors = new int[10][10];
-        nodelist = new Node[] {(new Node(0.2407f, 0.9712f, null)), (new Node(0.5686f, 0.5975f, null)), (new Node(0.7973f, 0.8415f, null)), (new Node(0.2935f, 0.1026f, null)), (new Node(0.6951f, 0.8155f, null)), (new Node(0.7172f, 0.6195f, null)), (new Node(0.7849f, 0.0543f, null)), (new Node(0.4253f, 0.3342f, null)), (new Node(0.1019f, 0.6077f, null)), (new Node(0.6277f, 0.8892f, null))};
-        neighbors[0] = new int[] {0,  1,  0,  0,  0,  1,  0,  0,  1,  1 };
-        neighbors[1] = new int[] {1,  0,  0,  0,  0,  1,  1,  1,  1,  0 };
-        neighbors[2] = new int[] {0,  0,  0,  0,  1,  1,  1,  0,  0,  1 };
-        neighbors[3] = new int[] {0,  0,  0,  0,  0,  0,  1,  1,  1,  0 };
-        neighbors[4] = new int[] {0,  0,  1,  0,  0,  1,  0,  0,  0,  1 };
-        neighbors[5] = new int[] {1,  1,  1,  0,  1,  0,  1,  0,  0,  1 };
-        neighbors[6] = new int[] {0,  1,  1,  1,  0,  1,  0,  1,  0,  0 };
-        neighbors[7] = new int[] {0,  1,  0,  1,  0,  0,  1,  0,  1,  0 };
-        neighbors[8] = new int[] {1,  1,  0,  1,  0,  0,  0,  1,  0,  0 };
-        neighbors[9] = new int[] {1,  0,  1,  0,  1,  1,  0,  0,  0,  0 };
+        populateNodelist();
+        populateAdjacencyMatrix();
+//        neighbors = new int[10][10];
+//        nodelist = new Node[] {(new Node(0.2407f, 0.9712f, null)), (new Node(0.5686f, 0.5975f, null)), (new Node(0.7973f, 0.8415f, null)), (new Node(0.2935f, 0.1026f, null)), (new Node(0.6951f, 0.8155f, null)), (new Node(0.7172f, 0.6195f, null)), (new Node(0.7849f, 0.0543f, null)), (new Node(0.4253f, 0.3342f, null)), (new Node(0.1019f, 0.6077f, null)), (new Node(0.6277f, 0.8892f, null))};
+//        neighbors[0] = new int[] {0,  1,  0,  0,  0,  1,  0,  0,  1,  1 };
+//        neighbors[1] = new int[] {1,  0,  0,  0,  0,  1,  1,  1,  1,  0 };
+//        neighbors[2] = new int[] {0,  0,  0,  0,  1,  1,  1,  0,  0,  1 };
+//        neighbors[3] = new int[] {0,  0,  0,  0,  0,  0,  1,  1,  1,  0 };
+//        neighbors[4] = new int[] {0,  0,  1,  0,  0,  1,  0,  0,  0,  1 };
+//        neighbors[5] = new int[] {1,  1,  1,  0,  1,  0,  1,  0,  0,  1 };
+//        neighbors[6] = new int[] {0,  1,  1,  1,  0,  1,  0,  1,  0,  0 };
+//        neighbors[7] = new int[] {0,  1,  0,  1,  0,  0,  1,  0,  1,  0 };
+//        neighbors[8] = new int[] {1,  1,  0,  1,  0,  0,  0,  1,  0,  0 };
+//        neighbors[9] = new int[] {1,  0,  1,  0,  1,  1,  0,  0,  0,  0 };
     }
 
     /**
